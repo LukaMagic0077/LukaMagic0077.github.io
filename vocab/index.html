@@ -53,7 +53,15 @@ h2.done-t{font-size:22px;font-weight:700;margin-top:16px}
 .cat-pill{background:#ede9fe;color:#7c3aed;font-size:12px;font-weight:500;border-radius:999px;padding:5px 12px;margin-bottom:16px}
 .term{font-size:30px;font-weight:800;letter-spacing:-.5px;text-align:center;line-height:1.3}
 .full{margin-top:12px;font-size:14px;color:#64748b;text-align:center}
-.flip-hint{margin-top:32px;font-size:12px;color:#94a3b8}
+.flip-hint{margin-top:24px;font-size:12px;color:#94a3b8}
+/* ── 发音 ── */
+.pron{margin-top:18px;display:flex;flex-direction:column;gap:6px;align-items:center}
+.pron-row{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.75);border:1px solid #ede9fe;border-radius:999px;padding:4px 8px 4px 12px}
+.pron-row .flag{font-size:13px}
+.pron-row .ipa{font-size:13px;color:#475569;letter-spacing:.5px}
+.spk{flex-shrink:0;border-radius:999px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:14px;background:#ede9fe;transition:background .15s}
+.spk:active{background:#c4b5fd}
+.spk.mini{width:26px;height:26px;font-size:12px;background:#f5f3ff}
 .back .cn{font-size:20px;font-weight:600;text-align:center;line-height:1.5}
 .ex-box{margin-top:22px;width:100%;background:rgba(255,255,255,.12);border-radius:16px;padding:16px}
 .ex-box .ex{font-size:14px;line-height:1.65;color:#eef2ff}
@@ -289,6 +297,139 @@ var TOTAL_DAYS = PLAN.length;
 var TOTAL_WORDS = VOCAB.length;
 var WEBHOOK_URL = 'https://open.feishu.cn/open-apis/bot/v2/hook/465728b2-682a-4403-8204-cd9c46857e47';
 
+/* ── 发音数据：英式 / 美式音标，say 为朗读文本（缩写词逐字母） ── */
+var PRON = {
+  'ai': { uk: 'ˌeɪ ˈaɪ', us: 'ˌeɪ ˈaɪ', say: 'A I' },
+  'ml': { uk: 'ˌem ˈel', us: 'ˌem ˈel', say: 'M L' },
+  'dl': { uk: 'ˌdiːp ˈlɜːnɪŋ', us: 'ˌdiːp ˈlɜːrnɪŋ' },
+  'nn': { uk: 'ˈnjʊərəl ˈnetwɜːk', us: 'ˈnʊrəl ˈnetwɜːrk' },
+  'nlp': { uk: 'ˌen el ˈpiː', us: 'ˌen el ˈpiː', say: 'N L P' },
+  'cv': { uk: 'ˌsiː ˈviː', us: 'ˌsiː ˈviː', say: 'C V' },
+  'genai': { uk: 'ˈdʒenərətɪv ˌeɪ ˈaɪ', us: 'ˈdʒenərətɪv ˌeɪ ˈaɪ' },
+  'agi': { uk: 'ˌeɪ dʒiː ˈaɪ', us: 'ˌeɪ dʒiː ˈaɪ', say: 'A G I' },
+  'foundation-model': { uk: 'faʊnˈdeɪʃn ˈmɒdl', us: 'faʊnˈdeɪʃn ˈmɑːdl' },
+  'llm': { uk: 'ˌel el ˈem', us: 'ˌel el ˈem', say: 'L L M' },
+  'multimodal': { uk: 'ˌmʌltiˈməʊdl', us: 'ˌmʌltiˈmoʊdl' },
+  'reasoning-model': { uk: 'ˈriːzənɪŋ ˈmɒdl', us: 'ˈriːzənɪŋ ˈmɑːdl' },
+  'hallucination': { uk: 'həˌluːsɪˈneɪʃn', us: 'həˌluːsəˈneɪʃn' },
+  'alignment': { uk: 'əˈlaɪnmənt', us: 'əˈlaɪnmənt' },
+  'transformer': { uk: 'trænsˈfɔːmə', us: 'trænsˈfɔːrmər' },
+  'attention': { uk: 'əˈtenʃn', us: 'əˈtenʃn' },
+  'token': { uk: 'ˈtəʊkən', us: 'ˈtoʊkən' },
+  'parameter': { uk: 'pəˈræmɪtə', us: 'pəˈræmɪtər' },
+  'embedding': { uk: 'ɪmˈbedɪŋ', us: 'ɪmˈbedɪŋ' },
+  'context-window': { uk: 'ˈkɒntekst ˈwɪndəʊ', us: 'ˈkɑːntekst ˈwɪndoʊ' },
+  'moe': { uk: 'ˌem əʊ ˈiː', us: 'ˌem oʊ ˈiː', say: 'M O E' },
+  'diffusion': { uk: 'dɪˈfjuːʒn ˈmɒdl', us: 'dɪˈfjuːʒn ˈmɑːdl' },
+  'encoder-decoder': { uk: 'ɪnˈkəʊdə ˌdiːˈkəʊdə', us: 'ɪnˈkoʊdər ˌdiːˈkoʊdər', say: 'encoder decoder' },
+  'checkpoint': { uk: 'ˈtʃekpɔɪnt', us: 'ˈtʃekpɔɪnt' },
+  'scaling-law': { uk: 'ˈskeɪlɪŋ lɔː', us: 'ˈskeɪlɪŋ lɔː' },
+  'corpus': { uk: 'ˈkɔːpəs', us: 'ˈkɔːrpəs' },
+  'pretraining': { uk: 'ˌpriːˈtreɪnɪŋ', us: 'ˌpriːˈtreɪnɪŋ' },
+  'finetuning': { uk: 'ˌfaɪn ˈtjuːnɪŋ', us: 'ˌfaɪn ˈtuːnɪŋ' },
+  'sft': { uk: 'ˌes ef ˈtiː', us: 'ˌes ef ˈtiː', say: 'S F T' },
+  'rlhf': { uk: 'ˌɑː el eɪtʃ ˈef', us: 'ˌɑːr el eɪtʃ ˈef', say: 'R L H F' },
+  'rlvr': { uk: 'ˌɑː el viː ˈɑː', us: 'ˌɑːr el viː ˈɑːr', say: 'R L V R' },
+  'lora': { uk: 'ˈlɔːrə', us: 'ˈlɔːrə', say: 'Lora' },
+  'peft': { uk: 'ˌpiː iː ef ˈtiː', us: 'ˌpiː iː ef ˈtiː', say: 'P E F T' },
+  'distillation': { uk: 'ˌdɪstɪˈleɪʃn', us: 'ˌdɪstɪˈleɪʃn' },
+  'quantization': { uk: 'ˌkwɒntaɪˈzeɪʃn', us: 'ˌkwɑːntɪˈzeɪʃn' },
+  'inference': { uk: 'ˈɪnfərəns', us: 'ˈɪnfərəns' },
+  'prompt': { uk: 'prɒmpt', us: 'prɑːmpt' },
+  'prompt-engineering': { uk: 'prɒmpt ˌendʒɪˈnɪərɪŋ', us: 'prɑːmpt ˌendʒɪˈnɪrɪŋ' },
+  'system-prompt': { uk: 'ˈsɪstəm prɒmpt', us: 'ˈsɪstəm prɑːmpt' },
+  'temperature': { uk: 'ˈtemprətʃə', us: 'ˈtemprətʃər' },
+  'top-p': { uk: 'tɒp ˈpiː', us: 'tɑːp ˈpiː', say: 'Top P' },
+  'latency': { uk: 'ˈleɪtnsi', us: 'ˈleɪtnsi' },
+  'throughput': { uk: 'ˈθruːpʊt', us: 'ˈθruːpʊt' },
+  'kv-cache': { uk: 'ˌkeɪ viː ˈkæʃ', us: 'ˌkeɪ viː ˈkæʃ', say: 'K V cache' },
+  'api': { uk: 'ˌeɪ piː ˈaɪ', us: 'ˌeɪ piː ˈaɪ', say: 'A P I' },
+  'on-premise': { uk: 'ˌɒn ˈpremɪs', us: 'ˌɑːn ˈpremɪs' },
+  'edge-ai': { uk: 'ˌedʒ eɪ ˈaɪ', us: 'ˌedʒ eɪ ˈaɪ', say: 'Edge A I' },
+  'gpu': { uk: 'ˌdʒiː piː ˈjuː, ˌtiː piː ˈjuː, ˌen piː ˈjuː', us: 'ˌdʒiː piː ˈjuː, ˌtiː piː ˈjuː, ˌen piː ˈjuː', say: 'G P U, T P U, N P U' },
+  'cuda': { uk: 'ˈkuːdə', us: 'ˈkuːdə', say: 'Cuda' },
+  'ai-agent': { uk: 'ˌeɪ aɪ ˈeɪdʒənt', us: 'ˌeɪ aɪ ˈeɪdʒənt', say: 'A I agent' },
+  'agentic-ai': { uk: 'eɪˈdʒentɪk ˌeɪ ˈaɪ', us: 'eɪˈdʒentɪk ˌeɪ ˈaɪ', say: 'Agentic A I' },
+  'multi-agent': { uk: 'ˌmʌlti ˈeɪdʒənt ˈsɪstəm', us: 'ˌmʌlti ˈeɪdʒənt ˈsɪstəm' },
+  'orchestration': { uk: 'ˌɔːkɪˈstreɪʃn', us: 'ˌɔːrkəˈstreɪʃn' },
+  'workflow-automation': { uk: 'ˈwɜːkfləʊ ˌɔːtəˈmeɪʃn', us: 'ˈwɜːrkfloʊ ˌɔːtəˈmeɪʃn' },
+  'rag': { uk: 'ræɡ', us: 'ræɡ' },
+  'vector-db': { uk: 'ˈvektə ˈdeɪtəbeɪs', us: 'ˈvektər ˈdeɪtəbeɪs' },
+  'function-calling': { uk: 'ˈfʌŋkʃn ˈkɔːlɪŋ', us: 'ˈfʌŋkʃn ˈkɔːlɪŋ' },
+  'mcp': { uk: 'ˌem siː ˈpiː', us: 'ˌem siː ˈpiː', say: 'M C P' },
+  'a2a': { uk: 'ˌeɪ tuː ˈeɪ', us: 'ˌeɪ tuː ˈeɪ', say: 'A two A' },
+  'cot': { uk: 'ˌsiː əʊ ˈtiː', us: 'ˌsiː oʊ ˈtiː', say: 'C O T' },
+  'react': { uk: 'riˈækt', us: 'riˈækt', say: 'react' },
+  'plan-execute': { uk: 'plæn ənd ˈeksɪkjuːt', us: 'plæn ənd ˈeksɪkjuːt' },
+  'memory': { uk: 'ˈmeməri', us: 'ˈmeməri' },
+  'hitl': { uk: 'ˌhjuːmən ɪn ðə ˈluːp', us: 'ˌhjuːmən ɪn ðə ˈluːp' },
+  'guardrails': { uk: 'ˈɡɑːdreɪlz', us: 'ˈɡɑːrdreɪlz' },
+  'evals': { uk: 'ɪˈvælz', us: 'ɪˈvælz' },
+  'deep-research': { uk: 'ˌdiːp rɪˈsɜːtʃ', us: 'ˌdiːp rɪˈsɜːrtʃ' },
+  'computer-use': { uk: 'kəmˈpjuːtə juːs', us: 'kəmˈpjuːtər juːs' },
+  'copilot': { uk: 'ˈkəʊpaɪlət', us: 'ˈkoʊpaɪlət' },
+  'text-to-image': { uk: 'ˌtekst tuː ˈɪmɪdʒ', us: 'ˌtekst tuː ˈɪmɪdʒ' },
+  'tts': { uk: 'ˌtiː tiː ˈes', us: 'ˌtiː tiː ˈes', say: 'T T S' },
+  'chatgpt': { uk: 'ˌtʃæt dʒiː piː ˈtiː', us: 'ˌtʃæt dʒiː piː ˈtiː', say: 'Chat G P T' },
+  'claude': { uk: 'klɔːd', us: 'klɔːd' },
+  'gemini': { uk: 'ˈdʒemɪnaɪ', us: 'ˈdʒemɪnaɪ' },
+  'perplexity': { uk: 'pəˈpleksəti', us: 'pərˈpleksəti' },
+  'cursor': { uk: 'ˈkɜːsə', us: 'ˈkɜːrsər' },
+  'github-copilot': { uk: 'ˈɡɪthʌb ˈkəʊpaɪlət', us: 'ˈɡɪthʌb ˈkoʊpaɪlət', say: 'Git Hub Copilot' },
+  'midjourney': { uk: 'ˈmɪdˌdʒɜːni', us: 'ˈmɪdˌdʒɜːrni' },
+  'sora': { uk: 'ˈsəʊrə', us: 'ˈsoʊrə' },
+  'elevenlabs': { uk: 'ɪˈlevn læbz', us: 'ɪˈlevn læbz', say: 'Eleven Labs' },
+  'huggingface': { uk: 'ˈhʌɡɪŋ feɪs', us: 'ˈhʌɡɪŋ feɪs' },
+  'langchain': { uk: 'ˈlæŋ tʃeɪn', us: 'ˈlæŋ tʃeɪn', say: 'Lang Chain' },
+  'ollama': { uk: 'əˈlɑːmə', us: 'əˈlɑːmə' },
+  'open-source-model': { uk: 'ˌəʊpən sɔːs ˈmɒdl', us: 'ˌoʊpən sɔːrs ˈmɑːdl' },
+  'ai-wrapper': { uk: 'ˌeɪ aɪ ˈræpə', us: 'ˌeɪ aɪ ˈræpər', say: 'A I wrapper' },
+  'vendor-lockin': { uk: 'ˈvendə lɒk ɪn', us: 'ˈvendər lɑːk ɪn' },
+  'ai-stack': { uk: 'ˌeɪ aɪ ˈstæk', us: 'ˌeɪ aɪ ˈstæk', say: 'A I stack' },
+  'token-billing': { uk: 'ˈtəʊkən ˈbɪlɪŋ', us: 'ˈtoʊkən ˈbɪlɪŋ' },
+  'freemium': { uk: 'ˈfriːmiəm', us: 'ˈfriːmiəm' },
+  'coding-plan': { uk: 'ˈkəʊdɪŋ plæn', us: 'ˈkoʊdɪŋ plæn' },
+  'agent-store': { uk: 'ˈeɪdʒənt stɔː', us: 'ˈeɪdʒənt stɔːr' },
+  'digital-employee': { uk: 'ˈdɪdʒɪtl ɪmˈplɔɪiː', us: 'ˈdɪdʒɪtl ɪmˈplɔɪiː' },
+  'ai-native': { uk: 'ˌeɪ aɪ ˈneɪtɪv', us: 'ˌeɪ aɪ ˈneɪtɪv', say: 'A I native' }
+};
+
+/* ── 语音合成（Web Speech API，英 / 美双口音） ── */
+var VOICES = [];
+function loadVoices() {
+  try { VOICES = window.speechSynthesis ? speechSynthesis.getVoices() : []; } catch (e) { VOICES = []; }
+}
+if ('speechSynthesis' in window) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+function speakWord(ev, id, accent) {
+  if (ev && ev.stopPropagation) ev.stopPropagation();
+  if (!('speechSynthesis' in window)) { alert('当前浏览器不支持语音合成，请换用系统浏览器打开'); return; }
+  var w = null;
+  for (var i = 0; i < VOCAB.length; i++) if (VOCAB[i].id === id) { w = VOCAB[i]; break; }
+  if (!w) return;
+  var p = PRON[id] || {};
+  var text = p.say || w.term;
+  var lang = accent === 'uk' ? 'en-GB' : 'en-US';
+  speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = lang;
+  u.rate = 0.85;
+  for (var j = 0; j < VOICES.length; j++) {
+    var vl = (VOICES[j].lang || '').replace('_', '-').toLowerCase();
+    if (vl.indexOf(lang.toLowerCase()) === 0) { u.voice = VOICES[j]; break; }
+  }
+  speechSynthesis.speak(u);
+}
+function pronBlock(id) {
+  var p = PRON[id];
+  if (!p) return '';
+  return '<div class="pron">' +
+    '<span class="pron-row"><span class="flag">🇬🇧</span><span class="ipa">/' + esc(p.uk) + '/</span>' +
+    '<button class="spk" onclick="speakWord(event,\'' + id + '\',\'uk\')" aria-label="英式发音">🔊</button></span>' +
+    '<span class="pron-row"><span class="flag">🇺🇸</span><span class="ipa">/' + esc(p.us) + '/</span>' +
+    '<button class="spk" onclick="speakWord(event,\'' + id + '\',\'us\')" aria-label="美式发音">🔊</button></span>' +
+    '</div>';
+}
+
 /* ── 状态 ── */
 function loadJSON(key, fallback) {
   try { var raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; }
@@ -439,6 +580,7 @@ function viewLearn() {
       '<div class="face front"><span class="cat-pill">' + esc(w.category) + '</span>' +
       '<h2 class="term">' + esc(w.term) + '</h2>' +
       (w.full ? '<p class="full">' + esc(w.full) + '</p>' : '') +
+      pronBlock(w.id) +
       '<p class="flip-hint">点击卡片查看释义与例句 →</p></div>' +
       '<div class="face back"><p class="cn">' + esc(w.cn) + '</p>' +
       '<div class="ex-box"><p class="ex">' + esc(w.example) + '</p>' +
@@ -511,7 +653,8 @@ function libraryList() {
     html += '<div class="wcard"><div class="top"><div>' +
       '<p class="t">' + esc(w.term) + (w.full ? '<span class="f">' + esc(w.full) + '</span>' : '') + '</p>' +
       '<p class="c">' + esc(w.cn) + '</p></div>' +
-      '<div class="tags">' + (isKnown ? '<span class="tag known">已掌握</span>' : '') +
+      '<div class="tags"><button class="spk mini" onclick="speakWord(event,\'' + w.id + '\',\'us\')" aria-label="播放发音">🔊</button>' +
+      (isKnown ? '<span class="tag known">已掌握</span>' : '') +
       '<span class="tag day">Day ' + w.day + '</span></div></div>' +
       '<div class="exb"><p class="e1">' + esc(w.example) + '</p><p class="e2">' + esc(w.exampleCn) + '</p></div></div>';
   }
