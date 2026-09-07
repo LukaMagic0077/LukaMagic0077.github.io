@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#7c3aed" />
+<meta name="description" content="AI 词汇打卡营：每天 10 分钟，14 天掌握 93 个 AI 生态核心英文词汇" />
+<title>AI 词汇打卡营</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:16px}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:linear-gradient(180deg,#f8fafc 0%,#f5f3ff 100%);background-attachment:fixed;color:#0f172a;min-height:100vh}
+button{font-family:inherit;border:none;cursor:pointer;background:none}
+.wrap{max-width:640px;margin:0 auto}
+/* ── 顶部栏 ── */
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(221,214,254,.6)}
+.hd{display:flex;align-items:center;justify-content:space-between;padding:10px 14px}
+.hd-l{display:flex;align-items:center;gap:10px}
+.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(124,58,237,.25)}
+.hd h1{font-size:16px;font-weight:700;line-height:1.25}
+.hd .sub{font-size:11px;color:#94a3b8}
+.hd-r{display:flex;gap:16px;text-align:center}
+.hd-r .num{font-size:14px;font-weight:700}
+.hd-r .num.orange{color:#f97316}
+.hd-r .num.violet{color:#7c3aed}
+.hd-r .num .of{font-size:11px;color:#94a3b8;font-weight:400}
+.hd-r .lbl{font-size:10px;color:#94a3b8}
+.pbar{height:4px;background:rgba(221,214,254,.6)}
+.pbar i{display:block;height:100%;background:linear-gradient(90deg,#8b5cf6,#6366f1);transition:width .5s;width:0}
+/* ── 标签导航 ── */
+nav.tabs{display:flex;gap:8px;padding:16px 14px 0}
+nav.tabs button{flex:1;white-space:nowrap;border-radius:999px;padding:11px 4px;font-size:13px;font-weight:500;color:#64748b;background:#fff;transition:all .15s;box-shadow:0 1px 2px rgba(15,23,42,.05)}
+nav.tabs button.on{background:#7c3aed;color:#fff;box-shadow:0 4px 10px rgba(124,58,237,.3)}
+/* ── 主体 ── */
+main{padding:20px 14px calc(96px + env(safe-area-inset-bottom))}
+.card{background:#fff;border:1px solid #ede9fe;border-radius:24px;box-shadow:0 1px 3px rgba(15,23,42,.06)}
+.center{text-align:center;padding:40px 24px}
+.big-emoji{font-size:48px}
+h2.done-t{font-size:22px;font-weight:700;margin-top:16px}
+.dim{color:#64748b;font-size:14px;margin-top:8px;line-height:1.7}
+.btn-primary{display:inline-block;margin-top:24px;border-radius:999px;background:#7c3aed;color:#fff;font-size:14px;font-weight:500;padding:11px 26px;box-shadow:0 4px 10px rgba(124,58,237,.3)}
+/* ── 学习页 ── */
+.learn-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:8px}
+.learn-hd .day-k{font-size:12px;font-weight:600;color:#8b5cf6}
+.learn-hd .day-f{font-size:17px;font-weight:700;margin-top:2px}
+.pill-cnt{flex-shrink:0;background:#fff;border-radius:999px;padding:6px 12px;font-size:12px;color:#64748b;box-shadow:0 1px 2px rgba(15,23,42,.06)}
+.flash{position:relative;height:24rem;perspective:1200px;cursor:pointer;user-select:none;-webkit-user-select:none}
+.flash-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flash.flip .flash-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:24px;padding:28px;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 10px 25px rgba(139,92,246,.15)}
+.face.front{background:linear-gradient(135deg,#f5f3ff,#ffffff 55%,#eef2ff);border:1px solid #ede9fe}
+.face.back{background:linear-gradient(135deg,#4f46e5,#7c3aed 55%,#9333ea);color:#fff;transform:rotateY(180deg);border:1px solid #c7d2fe}
+.cat-pill{background:#ede9fe;color:#7c3aed;font-size:12px;font-weight:500;border-radius:999px;padding:5px 12px;margin-bottom:16px}
+.term{font-size:30px;font-weight:800;letter-spacing:-.5px;text-align:center;line-height:1.3}
+.full{margin-top:12px;font-size:14px;color:#64748b;text-align:center}
+.flip-hint{margin-top:32px;font-size:12px;color:#94a3b8}
+.back .cn{font-size:20px;font-weight:600;text-align:center;line-height:1.5}
+.ex-box{margin-top:22px;width:100%;background:rgba(255,255,255,.12);border-radius:16px;padding:16px}
+.ex-box .ex{font-size:14px;line-height:1.65;color:#eef2ff}
+.ex-box .ex-cn{font-size:12px;line-height:1.6;color:#c7d2fe;margin-top:8px}
+.back .flip-hint{color:#c7d2fe}
+.mark-row{display:flex;gap:12px;margin-top:20px}
+.mark-row button{flex:1;border-radius:999px;padding:14px;font-size:15px;font-weight:600;transition:opacity .15s}
+.mark-row button:active{opacity:.8}
+.btn-weak{background:#fef3c7;border:1px solid #fcd34d;color:#d97706}
+.btn-known{background:linear-gradient(90deg,#7c3aed,#4f46e5);color:#fff;box-shadow:0 4px 12px rgba(124,58,237,.3)}
+.tip{margin-top:12px;text-align:center;font-size:12px;color:#94a3b8}
+/* 完成面板 */
+.stat-row{display:flex;justify-content:center;gap:40px;margin-top:20px}
+.stat-row .v{font-size:26px;font-weight:800}
+.stat-row .v.violet{color:#7c3aed}
+.stat-row .v.amber{color:#f59e0b}
+.stat-row .k{font-size:12px;color:#94a3b8;margin-top:2px}
+.btn-checkin{width:100%;margin-top:24px;border-radius:16px;background:linear-gradient(90deg,#f97316,#f59e0b);color:#fff;font-size:16px;font-weight:700;padding:16px;box-shadow:0 8px 20px rgba(249,115,22,.3)}
+.btn-checkin:active{opacity:.9}
+.checked{margin-top:24px;border-radius:16px;background:#ecfdf5;color:#059669;font-size:14px;font-weight:600;padding:14px}
+.again{margin-top:14px;font-size:13px;color:#94a3b8;text-decoration:underline}
+/* ── 计划页 ── */
+.note{background:#fff;border:1px solid #ede9fe;border-radius:16px;padding:14px 16px;font-size:13px;color:#64748b;line-height:1.7;margin-bottom:16px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.note b{color:#1e293b}
+.day-grid{display:grid;gap:12px}
+.day-card{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #f1f5f9;border-radius:16px;padding:16px;text-align:left;width:100%;transition:all .15s}
+.day-card:active{transform:scale(.985)}
+.day-card .badge{flex-shrink:0;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;background:#f1f5f9;color:#94a3b8}
+.day-card.done{background:rgba(236,253,245,.6);border-color:#a7f3d0}
+.day-card.done .badge{background:#10b981;color:#fff}
+.day-card.active{border-color:#c4b5fd;box-shadow:0 4px 12px rgba(139,92,246,.15)}
+.day-card.active .badge{background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff}
+.day-card .tt{font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.day-card .mm{font-size:12px;color:#94a3b8;margin-top:3px}
+.day-card .tag-done{color:#059669;margin-left:8px}
+.day-card .tag-now{color:#7c3aed;margin-left:8px}
+/* ── 词库页 ── */
+.search{width:100%;border:1px solid #ede9fe;border-radius:16px;background:#fff;padding:14px 16px;font-size:14px;outline:none;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.search:focus{border-color:#a78bfa}
+.cats{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.cats button{border-radius:999px;padding:7px 13px;font-size:12px;font-weight:500;background:#fff;color:#64748b;box-shadow:0 1px 2px rgba(15,23,42,.05)}
+.cats button.on{background:#7c3aed;color:#fff}
+.lib-cnt{font-size:12px;color:#94a3b8;margin-top:12px}
+.word-list{margin-top:12px;display:flex;flex-direction:column;gap:12px}
+.wcard{background:#fff;border:1px solid #f1f5f9;border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.wcard .top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.wcard .t{font-weight:700;font-size:15px}
+.wcard .f{font-size:11px;color:#94a3b8;font-weight:400;margin-left:8px}
+.wcard .c{color:#7c3aed;font-size:14px;margin-top:3px}
+.wcard .tags{flex-shrink:0;display:flex;gap:6px}
+.tag{border-radius:999px;font-size:10px;padding:3px 8px}
+.tag.known{background:#ecfdf5;color:#059669}
+.tag.day{background:#f8fafc;color:#94a3b8}
+.wcard .exb{margin-top:10px;background:#f8fafc;border-radius:12px;padding:12px}
+.wcard .exb .e1{font-size:12px;line-height:1.7;color:#475569}
+.wcard .exb .e2{font-size:12px;line-height:1.7;color:#94a3b8;margin-top:4px}
+footer{text-align:center;font-size:11px;color:#c4b5fd;padding:0 0 24px}
+@media (min-width:640px){
+  .flash{height:20rem}
+  .day-grid{grid-template-columns:1fr 1fr}
+  .term{font-size:36px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hd">
+    <div class="hd-l">
+      <span class="logo">✦</span>
+      <div>
+        <h1>AI 词汇打卡营</h1>
+        <p class="sub">每天 10 分钟 · 14 天通关 93 词</p>
+      </div>
+    </div>
+    <div class="hd-r">
+      <div><p class="num orange">🔥 <span id="streakNum">0</span></p><p class="lbl">连续打卡</p></div>
+      <div><p class="num violet"><span id="knownNum">0</span><span class="of">/93</span></p><p class="lbl">已掌握</p></div>
+    </div>
+  </div>
+  <div class="pbar"><i id="pbarFill"></i></div>
+</header>
+
+<nav class="tabs wrap">
+  <button data-tab="learn" class="on" onclick="setTab('learn')">📖 今日学习</button>
+  <button data-tab="plan" onclick="setTab('plan')">🗓️ 学习计划</button>
+  <button data-tab="library" onclick="setTab('library')">🔤 全部词库</button>
+</nav>
+
+<main class="wrap" id="main"></main>
+<footer>AI 词汇打卡营 · 每天进步一点点</footer>
+
+<script>
+var PLAN = [
+  { day: 1, title: 'AI 基石 I', focus: '认识人工智能大家族', minutes: 10 },
+  { day: 2, title: 'AI 基石 II', focus: '大模型时代的核心名词', minutes: 10 },
+  { day: 3, title: '模型架构 I', focus: '打开 Transformer 黑盒', minutes: 10 },
+  { day: 4, title: '模型架构 II', focus: '生成、扩展与训练素材', minutes: 10 },
+  { day: 5, title: '训练 I', focus: '模型是怎么炼成的', minutes: 10 },
+  { day: 6, title: '训练 II', focus: '高效微调与模型压缩', minutes: 10 },
+  { day: 7, title: '推理 I', focus: '提示词的艺术', minutes: 10 },
+  { day: 8, title: '推理 II', focus: '性能、部署与算力', minutes: 10 },
+  { day: 9, title: 'Agent I', focus: '智能体崛起', minutes: 10 },
+  { day: 10, title: 'Agent II', focus: '知识、工具与协议', minutes: 10 },
+  { day: 11, title: 'Agent III', focus: '推理范式与安全', minutes: 10 },
+  { day: 12, title: 'Agent IV', focus: '生成式应用范式', minutes: 10 },
+  { day: 13, title: '工具图谱', focus: '主流 AI 产品速览', minutes: 10 },
+  { day: 14, title: '商业术语', focus: '看懂 AI 行业与商业模式', minutes: 10 },
+];
+var VOCAB = [
+  // ── Day 1 · AI 基石 I ─────────────────────────────
+  { id: 'ai', term: 'AI', full: 'Artificial Intelligence', cn: '人工智能', example: 'AI is reshaping how teams write code, design products, and serve customers.', exampleCn: '人工智能正在重塑团队写代码、设计产品和服务客户的方式。', category: '基础概念', day: 1 },
+  { id: 'ml', term: 'ML', full: 'Machine Learning', cn: '机器学习', example: 'Machine learning lets systems improve from data instead of following fixed rules.', exampleCn: '机器学习让系统从数据中自我改进，而不是遵循写死的规则。', category: '基础概念', day: 1 },
+  { id: 'dl', term: 'Deep Learning', cn: '深度学习', example: 'Deep learning uses multi-layer neural networks to recognize images and speech.', exampleCn: '深度学习使用多层神经网络来识别图像和语音。', category: '基础概念', day: 1 },
+  { id: 'nn', term: 'Neural Network', cn: '神经网络', example: 'A neural network is loosely inspired by how neurons connect in the human brain.', exampleCn: '神经网络的设计灵感大致来自人脑神经元之间的连接方式。', category: '基础概念', day: 1 },
+  { id: 'nlp', term: 'NLP', full: 'Natural Language Processing', cn: '自然语言处理', example: 'NLP powers translation apps, chatbots, and search engines.', exampleCn: '自然语言处理驱动着翻译应用、聊天机器人和搜索引擎。', category: '基础概念', day: 1 },
+  { id: 'cv', term: 'CV', full: 'Computer Vision', cn: '计算机视觉', example: 'Computer vision helps self-driving cars read traffic signs and detect pedestrians.', exampleCn: '计算机视觉帮助自动驾驶汽车识别交通标志并检测行人。', category: '基础概念', day: 1 },
+  { id: 'genai', term: 'Generative AI', full: 'GenAI', cn: '生成式人工智能', example: 'Generative AI can create text, images, music, and video from simple prompts.', exampleCn: '生成式 AI 可以根据简单的提示词创作文本、图像、音乐和视频。', category: '基础概念', day: 1 },
+  { id: 'agi', term: 'AGI', full: 'Artificial General Intelligence', cn: '通用人工智能', example: 'AGI refers to AI that matches human ability across almost any task.', exampleCn: '通用人工智能指的是在几乎所有任务上都能达到人类水平的 AI。', category: '基础概念', day: 1 },
+
+  // ── Day 2 · AI 基石 II ────────────────────────────
+  { id: 'foundation-model', term: 'Foundation Model', cn: '基础模型 / 基座模型', example: 'A foundation model is pre-trained on broad data and then adapted to many tasks.', exampleCn: '基础模型在海量通用数据上预训练，再适配到各种下游任务。', category: '基础概念', day: 2 },
+  { id: 'llm', term: 'LLM', full: 'Large Language Model', cn: '大语言模型', example: 'An LLM like GPT or Claude predicts the next token to generate fluent text.', exampleCn: '像 GPT 或 Claude 这样的大语言模型通过预测下一个词元来生成流畅文本。', category: '基础概念', day: 2 },
+  { id: 'multimodal', term: 'Multimodal', cn: '多模态', example: 'A multimodal model can understand a photo, describe it, and answer questions about it.', exampleCn: '多模态模型能看懂照片、描述它并回答相关问题。', category: '基础概念', day: 2 },
+  { id: 'reasoning-model', term: 'Reasoning Model', cn: '推理模型', example: 'A reasoning model thinks step by step before giving its final answer.', exampleCn: '推理模型会先一步步思考，再给出最终答案。', category: '基础概念', day: 2 },
+  { id: 'hallucination', term: 'Hallucination', cn: '幻觉（模型编造不实信息）', example: 'Always double-check facts, because even the best models can hallucinate.', exampleCn: '一定要核实事实，因为即使最好的模型也可能产生幻觉。', category: '基础概念', day: 2 },
+  { id: 'alignment', term: 'Alignment', cn: '对齐', example: 'Alignment research aims to make AI systems follow human values and intent.', exampleCn: '对齐研究旨在让 AI 系统遵循人类的价值观和意图。', category: '基础概念', day: 2 },
+
+  // ── Day 3 · 模型架构 I ────────────────────────────
+  { id: 'transformer', term: 'Transformer', cn: '现代大模型的核心架构', example: 'The Transformer architecture, introduced in 2017, powers nearly all modern LLMs.', exampleCn: '2017 年提出的 Transformer 架构驱动着几乎所有现代大模型。', category: '模型架构', day: 3 },
+  { id: 'attention', term: 'Attention', full: 'Self-Attention', cn: '注意力机制', example: 'Attention lets the model focus on the most relevant words in a sentence.', exampleCn: '注意力机制让模型聚焦句子中最相关的词。', category: '模型架构', day: 3 },
+  { id: 'token', term: 'Token', cn: '词元（模型处理文本的最小单位）', example: 'APIs bill by the token, so long documents cost more to process.', exampleCn: 'API 按词元计费，所以处理长文档的费用更高。', category: '模型架构', day: 3 },
+  { id: 'parameter', term: 'Parameter', cn: '参数（如 7B = 70 亿参数）', example: 'A 7B model has seven billion parameters learned during training.', exampleCn: '一个 7B 模型拥有训练中学到的 70 亿个参数。', category: '模型架构', day: 3 },
+  { id: 'embedding', term: 'Embedding', cn: '嵌入 / 向量化', example: 'Embeddings turn words into vectors so similar meanings sit close together.', exampleCn: '嵌入把词变成向量，让含义相近的词在向量空间中彼此靠近。', category: '模型架构', day: 3 },
+  { id: 'context-window', term: 'Context Window', cn: '上下文窗口', example: 'A larger context window lets the model read entire books in one pass.', exampleCn: '更大的上下文窗口让模型一次就能读完整本书。', category: '模型架构', day: 3 },
+
+  // ── Day 4 · 模型架构 II ───────────────────────────
+  { id: 'moe', term: 'MoE', full: 'Mixture of Experts', cn: '混合专家架构', example: 'MoE activates only a few experts per token, cutting compute costs.', exampleCn: '混合专家架构每个词元只激活少数几个“专家”，从而降低算力成本。', category: '模型架构', day: 4 },
+  { id: 'diffusion', term: 'Diffusion Model', cn: '扩散模型', example: 'Diffusion models generate images by gradually removing noise.', exampleCn: '扩散模型通过逐步去除噪声来生成图像。', category: '模型架构', day: 4 },
+  { id: 'encoder-decoder', term: 'Encoder / Decoder', cn: '编码器 / 解码器', example: 'The encoder reads the input, and the decoder writes the output.', exampleCn: '编码器负责读懂输入，解码器负责生成输出。', category: '模型架构', day: 4 },
+  { id: 'checkpoint', term: 'Checkpoint', cn: '模型检查点 / 权重文件', example: 'You can download open checkpoints and fine-tune them on your own data.', exampleCn: '你可以下载开源的模型权重，并在自己的数据上微调。', category: '模型架构', day: 4 },
+  { id: 'scaling-law', term: 'Scaling Law', cn: '缩放定律', example: 'Scaling laws predict how performance improves with more data and compute.', exampleCn: '缩放定律预测模型性能如何随数据和算力的增加而提升。', category: '模型架构', day: 4 },
+  { id: 'corpus', term: 'Corpus', cn: '语料库', example: 'The training corpus mixes books, websites, and code repositories.', exampleCn: '训练语料库混合了书籍、网站和代码仓库。', category: '模型架构', day: 4 },
+
+  // ── Day 5 · 训练 I ────────────────────────────────
+  { id: 'pretraining', term: 'Pre-training', cn: '预训练', example: 'Pre-training on trillions of tokens gives the model its general knowledge.', exampleCn: '在数万亿词元上预训练，让模型获得通用知识。', category: '训练优化', day: 5 },
+  { id: 'finetuning', term: 'Fine-tuning', cn: '微调', example: 'Fine-tuning adapts a general model to legal or medical language.', exampleCn: '微调可以让通用模型适应法律或医学领域的语言。', category: '训练优化', day: 5 },
+  { id: 'sft', term: 'SFT', full: 'Supervised Fine-Tuning', cn: '监督微调', example: 'SFT teaches the model to follow instructions using curated examples.', exampleCn: '监督微调用精心准备的示例教模型遵循指令。', category: '训练优化', day: 5 },
+  { id: 'rlhf', term: 'RLHF', full: 'Reinforcement Learning from Human Feedback', cn: '基于人类反馈的强化学习', example: 'RLHF uses human preferences to make answers more helpful and safe.', exampleCn: 'RLHF 利用人类偏好让回答更有帮助、更安全。', category: '训练优化', day: 5 },
+
+  // ── Day 6 · 训练 II ───────────────────────────────
+  { id: 'rlvr', term: 'RLVR', full: 'Reinforcement Learning with Verifiable Rewards', cn: '基于可验证奖励的强化学习', example: 'RLVR rewards the model when its math or code output is verifiably correct.', exampleCn: 'RLVR 在模型的数学或代码输出被验证为正确时给予奖励。', category: '训练优化', day: 6 },
+  { id: 'lora', term: 'LoRA', full: 'Low-Rank Adaptation', cn: '低秩适配（轻量微调）', example: 'With LoRA, you can fine-tune a huge model on a single GPU.', exampleCn: '使用 LoRA，你可以在一张显卡上微调超大模型。', category: '训练优化', day: 6 },
+  { id: 'peft', term: 'PEFT', full: 'Parameter-Efficient Fine-Tuning', cn: '参数高效微调', example: 'PEFT methods update only a small fraction of weights to save memory.', exampleCn: '参数高效微调只更新一小部分权重，从而节省显存。', category: '训练优化', day: 6 },
+  { id: 'distillation', term: 'Distillation', cn: '蒸馏（大模型教小模型）', example: 'Distillation trains a small student model to mimic a large teacher.', exampleCn: '蒸馏是让小的“学生模型”模仿大的“教师模型”。', category: '训练优化', day: 6 },
+  { id: 'quantization', term: 'Quantization', cn: '量化（压缩模型精度）', example: 'Quantization compresses weights from 16-bit to 4-bit for cheaper inference.', exampleCn: '量化把权重从 16 位压缩到 4 位，让推理更便宜。', category: '训练优化', day: 6 },
+
+  // ── Day 7 · 推理 I ────────────────────────────────
+  { id: 'inference', term: 'Inference', cn: '推理（模型生成答案的过程）', example: 'Inference is when the trained model generates an answer to your prompt.', exampleCn: '推理是训练好的模型根据提示词生成答案的过程。', category: '推理部署', day: 7 },
+  { id: 'prompt', term: 'Prompt', cn: '提示词', example: 'A clear prompt with examples usually beats a vague one-line request.', exampleCn: '带示例的清晰提示词，通常胜过含糊的一句话请求。', category: '推理部署', day: 7 },
+  { id: 'prompt-engineering', term: 'Prompt Engineering', cn: '提示词工程', example: 'Prompt engineering is the craft of designing inputs that get reliable outputs.', exampleCn: '提示词工程是设计输入以获得稳定可靠输出的技艺。', category: '推理部署', day: 7 },
+  { id: 'system-prompt', term: 'System Prompt', cn: '系统提示词', example: "The system prompt sets the assistant's role, tone, and boundaries.", exampleCn: '系统提示词设定助手的角色、语气和边界。', category: '推理部署', day: 7 },
+  { id: 'temperature', term: 'Temperature', cn: '温度（控制输出随机性）', example: 'Lower the temperature for factual tasks; raise it for brainstorming.', exampleCn: '做事实性任务时调低温度，头脑风暴时调高温度。', category: '推理部署', day: 7 },
+  { id: 'top-p', term: 'Top-p', full: 'Nucleus Sampling', cn: '核采样参数', example: 'Top-p sampling only considers the most likely tokens that sum to probability p.', exampleCn: 'Top-p 采样只在累计概率达到 p 的最可能词元中做选择。', category: '推理部署', day: 7 },
+
+  // ── Day 8 · 推理 II ───────────────────────────────
+  { id: 'latency', term: 'Latency', cn: '延迟', example: 'Streaming replies reduces perceived latency in chat apps.', exampleCn: '流式输出降低了聊天应用中感知到的延迟。', category: '推理部署', day: 8 },
+  { id: 'throughput', term: 'Throughput', cn: '吞吐量', example: 'Batching requests boosts throughput when serving many users.', exampleCn: '批量处理请求可以在服务大量用户时提升吞吐量。', category: '推理部署', day: 8 },
+  { id: 'kv-cache', term: 'KV Cache', cn: '键值缓存（加速推理）', example: 'The KV cache stores prior attention states so generation stays fast.', exampleCn: 'KV 缓存保存之前的注意力状态，让生成保持高速。', category: '推理部署', day: 8 },
+  { id: 'api', term: 'API', full: 'Application Programming Interface', cn: '应用程序接口', example: "Developers call the model's API and pay per million tokens.", exampleCn: '开发者调用模型的 API，按每百万词元付费。', category: '推理部署', day: 8 },
+  { id: 'on-premise', term: 'On-premise', full: 'Self-hosted', cn: '本地部署 / 私有化部署', example: 'Banks often require on-premise deployment for data compliance.', exampleCn: '银行通常出于数据合规要求选择私有化部署。', category: '推理部署', day: 8 },
+  { id: 'edge-ai', term: 'Edge AI', full: 'On-device AI', cn: '端侧 AI', example: 'Edge AI runs models directly on your phone without the cloud.', exampleCn: '端侧 AI 直接在手机上运行模型，无需依赖云端。', category: '推理部署', day: 8 },
+  { id: 'gpu', term: 'GPU / TPU / NPU', cn: '各类 AI 算力芯片', example: 'Training frontier models takes tens of thousands of GPUs.', exampleCn: '训练前沿模型需要数以万计的 GPU。', category: '推理部署', day: 8 },
+  { id: 'cuda', term: 'CUDA', cn: '英伟达 GPU 计算平台', example: 'CUDA is the NVIDIA platform that most AI frameworks build on.', exampleCn: 'CUDA 是英伟达的计算平台，绝大多数 AI 框架都建立在它之上。', category: '推理部署', day: 8 },
+
+  // ── Day 9 · Agent I ───────────────────────────────
+  { id: 'ai-agent', term: 'AI Agent', cn: 'AI 智能体', example: 'An AI agent can plan a trip, book flights, and email you the itinerary.', exampleCn: 'AI 智能体能规划行程、订机票，并把行程单发到你的邮箱。', category: 'Agent 范式', day: 9 },
+  { id: 'agentic-ai', term: 'Agentic AI', cn: '智能体化 AI', example: 'Agentic AI systems act autonomously toward goals instead of just chatting.', exampleCn: '智能体化 AI 系统朝着目标自主行动，而不只是聊天。', category: 'Agent 范式', day: 9 },
+  { id: 'multi-agent', term: 'Multi-Agent System', cn: '多智能体系统', example: 'In a multi-agent system, a planner agent delegates work to specialist agents.', exampleCn: '在多智能体系统中，规划智能体把任务分派给各个专家智能体。', category: 'Agent 范式', day: 9 },
+  { id: 'orchestration', term: 'Orchestration', cn: '编排（协调多个 Agent / 步骤）', example: 'Orchestration coordinates each step so agents run in the right order.', exampleCn: '编排负责协调每个步骤，让智能体按正确顺序运行。', category: 'Agent 范式', day: 9 },
+  { id: 'workflow-automation', term: 'Workflow Automation', cn: '工作流自动化', example: 'Workflow automation connects apps so repetitive tasks run themselves.', exampleCn: '工作流自动化把应用串联起来，让重复性任务自动完成。', category: 'Agent 范式', day: 9 },
+
+  // ── Day 10 · Agent II ─────────────────────────────
+  { id: 'rag', term: 'RAG', full: 'Retrieval-Augmented Generation', cn: '检索增强生成', example: 'RAG retrieves company documents so the model answers with facts, not guesses.', exampleCn: 'RAG 检索企业文档，让模型基于事实作答而不是凭空猜测。', category: 'Agent 范式', day: 10 },
+  { id: 'vector-db', term: 'Vector Database', cn: '向量数据库', example: 'A vector database finds semantically similar text in milliseconds.', exampleCn: '向量数据库能在毫秒级找到语义相近的文本。', category: 'Agent 范式', day: 10 },
+  { id: 'function-calling', term: 'Function Calling', full: 'Tool Calling', cn: '函数调用 / 工具调用', example: 'With function calling, the model can check the weather via a real API.', exampleCn: '借助函数调用，模型可以通过真实 API 查询天气。', category: 'Agent 范式', day: 10 },
+  { id: 'mcp', term: 'MCP', full: 'Model Context Protocol', cn: '模型上下文协议', example: 'MCP standardizes how agents connect to tools and data sources.', exampleCn: 'MCP 标准化了智能体连接工具和数据源的方式。', category: 'Agent 范式', day: 10 },
+  { id: 'a2a', term: 'A2A', full: 'Agent-to-Agent Protocol', cn: '智能体间通信协议', example: "A2A lets one company's agent hand tasks to another company's agent.", exampleCn: 'A2A 协议让一家公司的智能体可以把任务交给另一家公司的智能体。', category: 'Agent 范式', day: 10 },
+
+  // ── Day 11 · Agent III ────────────────────────────
+  { id: 'cot', term: 'CoT', full: 'Chain-of-Thought', cn: '思维链', example: 'Asking for chain-of-thought helps the model solve math step by step.', exampleCn: '要求模型展示思维链，有助于它一步步解出数学题。', category: 'Agent 范式', day: 11 },
+  { id: 'react', term: 'ReAct', full: 'Reason + Act', cn: '推理-行动循环', example: 'ReAct interleaves reasoning with actions like search and code execution.', exampleCn: 'ReAct 把推理与搜索、执行代码等行动交替结合。', category: 'Agent 范式', day: 11 },
+  { id: 'plan-execute', term: 'Plan-and-Execute', cn: '规划-执行模式', example: 'Plan-and-execute splits a big goal into steps before acting.', exampleCn: '规划-执行模式先把大目标拆解成步骤，再逐步行动。', category: 'Agent 范式', day: 11 },
+  { id: 'memory', term: 'Memory', cn: '记忆系统（短期 / 长期 / 向量记忆）', example: 'With memory, an assistant remembers your preferences across sessions.', exampleCn: '有了记忆系统，助手能跨会话记住你的偏好。', category: 'Agent 范式', day: 11 },
+  { id: 'hitl', term: 'Human-in-the-loop', full: 'HITL', cn: '人类在环（关键节点人工确认）', example: 'High-risk actions go through a human-in-the-loop approval step.', exampleCn: '高风险操作会经过“人类在环”的审批环节。', category: 'Agent 范式', day: 11 },
+  { id: 'guardrails', term: 'Guardrails', cn: '护栏（安全约束）', example: 'Guardrails block the model from leaking private data or giving harmful advice.', exampleCn: '护栏阻止模型泄露隐私数据或给出有害建议。', category: 'Agent 范式', day: 11 },
+  { id: 'evals', term: 'Evals', full: 'Evaluations', cn: '评估体系', example: 'Teams run evals to measure accuracy before shipping a new model.', exampleCn: '团队在上线新模型前会运行评估来衡量准确率。', category: 'Agent 范式', day: 11 },
+
+  // ── Day 12 · Agent IV ─────────────────────────────
+  { id: 'deep-research', term: 'Deep Research', cn: '深度研究（自动检索 + 分析）', example: 'Deep Research browses dozens of sources and compiles a cited report.', exampleCn: '深度研究功能会浏览数十个来源，并整理出带引用的报告。', category: 'Agent 范式', day: 12 },
+  { id: 'computer-use', term: 'Computer Use', cn: '让 AI 直接操作电脑桌面', example: 'Computer use lets the agent click, type, and navigate real software.', exampleCn: '电脑操作能力让智能体能点击、输入、操作真实软件。', category: 'Agent 范式', day: 12 },
+  { id: 'copilot', term: 'Copilot', cn: 'AI 副驾驶（嵌入式助手统称）', example: 'A copilot sits inside your IDE and suggests code as you type.', exampleCn: 'AI 副驾驶嵌在 IDE 里，你边打字它边给出代码建议。', category: 'Agent 范式', day: 12 },
+  { id: 'text-to-image', term: 'Text-to-Image', full: 'Text-to-Video', cn: '文生图 / 文生视频', example: 'Text-to-image models turn a single sentence into a finished illustration.', exampleCn: '文生图模型能把一句话变成一幅完整的插画。', category: 'Agent 范式', day: 12 },
+  { id: 'tts', term: 'TTS', full: 'Text-to-Speech', cn: '文字转语音', example: 'Modern TTS voices are nearly indistinguishable from human speakers.', exampleCn: '现代 TTS 的声音几乎与真人难以区分。', category: 'Agent 范式', day: 12 },
+
+  // ── Day 13 · 工具图谱 ─────────────────────────────
+  { id: 'chatgpt', term: 'ChatGPT', cn: 'OpenAI 的通用 AI 助手', example: 'ChatGPT is the most widely used AI assistant for writing, coding, and research.', exampleCn: 'ChatGPT 是使用最广的 AI 助手，覆盖写作、编程和研究。', category: '主流工具', day: 13 },
+  { id: 'claude', term: 'Claude', cn: 'Anthropic 的 AI 助手', example: 'Claude is known for careful reasoning and long-document analysis.', exampleCn: 'Claude 以严谨的推理和长文档分析能力著称。', category: '主流工具', day: 13 },
+  { id: 'gemini', term: 'Gemini', cn: 'Google 的多模态 AI 助手', example: 'Gemini integrates deeply with Google’s ecosystem, from Gmail to Docs.', exampleCn: 'Gemini 与谷歌生态深度集成，从 Gmail 到 Docs 无处不在。', category: '主流工具', day: 13 },
+  { id: 'perplexity', term: 'Perplexity', cn: 'AI 搜索引擎', example: 'Perplexity answers questions with real-time web sources and citations.', exampleCn: 'Perplexity 基于实时网页来源回答问题并附上引用。', category: '主流工具', day: 13 },
+  { id: 'cursor', term: 'Cursor', cn: 'AI 编程编辑器', example: 'Cursor lets developers chat with their codebase and apply edits inline.', exampleCn: 'Cursor 让开发者与自己的代码库对话，并直接应用修改。', category: '主流工具', day: 13 },
+  { id: 'github-copilot', term: 'GitHub Copilot', cn: 'GitHub 的 AI 编程助手', example: 'GitHub Copilot autocompletes code inside VS Code and other IDEs.', exampleCn: 'GitHub Copilot 在 VS Code 等 IDE 中自动补全代码。', category: '主流工具', day: 13 },
+  { id: 'midjourney', term: 'Midjourney', cn: '艺术级文生图工具', example: 'Designers use Midjourney to produce striking concept art from prompts.', exampleCn: '设计师用 Midjourney 根据提示词生成令人惊艳的概念图。', category: '主流工具', day: 13 },
+  { id: 'sora', term: 'Sora', cn: 'OpenAI 的文生视频模型', example: 'Sora generates cinematic video clips from a text description.', exampleCn: 'Sora 能根据一段文字描述生成电影质感的视频片段。', category: '主流工具', day: 13 },
+  { id: 'elevenlabs', term: 'ElevenLabs', cn: 'AI 配音与声音克隆平台', example: 'ElevenLabs clones voices and dubs videos into dozens of languages.', exampleCn: 'ElevenLabs 可以克隆声音，并把视频配音成几十种语言。', category: '主流工具', day: 13 },
+  { id: 'huggingface', term: 'Hugging Face', cn: '开源模型社区', example: 'Hugging Face hosts millions of open models and datasets.', exampleCn: 'Hugging Face 托管着数以百万计的开源模型和数据集。', category: '主流工具', day: 13 },
+  { id: 'langchain', term: 'LangChain', cn: 'Agent 应用开发框架', example: 'LangChain helps developers chain models, tools, and data into apps.', exampleCn: 'LangChain 帮助开发者把模型、工具和数据串联成应用。', category: '主流工具', day: 13 },
+  { id: 'ollama', term: 'Ollama', cn: '本地运行开源模型的工具', example: 'With Ollama you can run open LLMs on your own laptop offline.', exampleCn: '使用 Ollama，你可以在笔记本上离线运行开源大模型。', category: '主流工具', day: 13 },
+
+  // ── Day 14 · 商业术语 ─────────────────────────────
+  { id: 'open-source-model', term: 'Open-source Model', cn: '开源模型', example: 'Open-source models let companies self-host and fine-tune freely.', exampleCn: '开源模型让企业可以自由地私有化部署和微调。', category: '商业术语', day: 14 },
+  { id: 'ai-wrapper', term: 'AI Wrapper', cn: 'AI 套壳应用', example: 'Critics call simple products built on an API an AI wrapper.', exampleCn: '批评者把简单建立在 API 之上的产品称为“AI 套壳”。', category: '商业术语', day: 14 },
+  { id: 'vendor-lockin', term: 'Vendor Lock-in', cn: '供应商锁定', example: 'Designing around outcomes, not tools, reduces vendor lock-in.', exampleCn: '围绕结果而非具体工具来设计，可以降低供应商锁定的风险。', category: '商业术语', day: 14 },
+  { id: 'ai-stack', term: 'AI Stack', cn: 'AI 工具组合栈', example: "A creator's AI stack might combine research, drafting, and design tools.", exampleCn: '创作者的 AI 工具栈可能组合了检索、写作和设计工具。', category: '商业术语', day: 14 },
+  { id: 'token-billing', term: 'Token Billing', full: 'Pay-as-you-go', cn: '按词元计费 / 按量付费', example: 'Token billing means long contexts directly increase your API costs.', exampleCn: '按词元计费意味着长上下文会直接推高你的 API 成本。', category: '商业术语', day: 14 },
+  { id: 'freemium', term: 'Freemium', cn: '免费 + 增值模式', example: 'Most AI tools use a freemium model with generous free tiers.', exampleCn: '大多数 AI 工具采用免费增值模式，免费额度相当慷慨。', category: '商业术语', day: 14 },
+  { id: 'coding-plan', term: 'Coding Plan', cn: 'AI 编程订阅套餐', example: 'A coding plan gives heavy users a fixed monthly quota of model calls.', exampleCn: '编程订阅套餐为重度用户提供固定额度的月度模型调用量。', category: '商业术语', day: 14 },
+  { id: 'agent-store', term: 'Agent Store', full: 'MCP Marketplace', cn: '智能体商店 / 工具市场', example: 'An agent store distributes ready-made agents like an app store.', exampleCn: '智能体商店像应用商店一样分发现成的智能体。', category: '商业术语', day: 14 },
+  { id: 'digital-employee', term: 'Digital Employee', cn: '数字员工', example: 'Companies are piloting digital employees for invoice processing.', exampleCn: '企业正在试点用数字员工处理发票流程。', category: '商业术语', day: 14 },
+  { id: 'ai-native', term: 'AI-native', cn: 'AI 原生（应用 / 公司）', example: 'AI-native startups design every workflow around models from day one.', exampleCn: 'AI 原生创业公司从第一天起就围绕模型设计每个工作流。', category: '商业术语', day: 14 },
+];
+
+var TOTAL_DAYS = PLAN.length;
+var TOTAL_WORDS = VOCAB.length;
+var WEBHOOK_URL = 'https://open.feishu.cn/open-apis/bot/v2/hook/465728b2-682a-4403-8204-cd9c46857e47';
+
+/* ── 状态 ── */
+function loadJSON(key, fallback) {
+  try { var raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; }
+  catch (e) { return fallback; }
+}
+var known = loadJSON('avc_known', []);
+var checkins = loadJSON('avc_checkins', []);
+var completedDays = loadJSON('avc_completed', []);
+
+var tab = 'learn';
+var activeDay = null;
+var index = 0;
+var flipped = false;
+var finished = false;
+var sessionKnown = [];
+var sessionWeak = [];
+var query = '';
+var catFilter = '全部';
+
+function save() {
+  try {
+    localStorage.setItem('avc_known', JSON.stringify(known));
+    localStorage.setItem('avc_checkins', JSON.stringify(checkins));
+    localStorage.setItem('avc_completed', JSON.stringify(completedDays));
+  } catch (e) {}
+}
+function dateStr(d) {
+  var m = ('0' + (d.getMonth() + 1)).slice(-2);
+  var day = ('0' + d.getDate()).slice(-2);
+  return d.getFullYear() + '-' + m + '-' + day;
+}
+function calcStreak(dates) {
+  var set = {};
+  for (var i = 0; i < dates.length; i++) set[dates[i]] = 1;
+  var d = new Date();
+  if (!set[dateStr(d)]) d.setDate(d.getDate() - 1);
+  var streak = 0;
+  while (set[dateStr(d)]) { streak++; d.setDate(d.getDate() - 1); }
+  return streak;
+}
+function wordsOfDay(d) {
+  return VOCAB.filter(function (w) { return w.day === d; });
+}
+function currentDay() {
+  for (var d = 1; d <= TOTAL_DAYS; d++) if (completedDays.indexOf(d) < 0) return d;
+  return TOTAL_DAYS;
+}
+function esc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+/* ── 行为 ── */
+function setTab(t) {
+  tab = t;
+  var btns = document.querySelectorAll('nav.tabs button');
+  for (var i = 0; i < btns.length; i++) btns[i].className = btns[i].getAttribute('data-tab') === t ? 'on' : '';
+  render();
+}
+function startSession(d) {
+  activeDay = d; index = 0; flipped = false; finished = false;
+  sessionKnown = []; sessionWeak = [];
+  setTab('learn');
+  window.scrollTo(0, 0);
+}
+function flipCard() {
+  flipped = !flipped;
+  var f = document.getElementById('flashcard');
+  if (f) f.className = flipped ? 'flash flip' : 'flash';
+}
+function mark(kind) {
+  var words = wordsOfDay(activeDay !== null ? activeDay : currentDay());
+  var w = words[index];
+  if (!w) return;
+  if (kind === 'known') {
+    if (sessionKnown.indexOf(w.id) < 0) sessionKnown.push(w.id);
+    if (known.indexOf(w.id) < 0) known.push(w.id);
+  } else {
+    if (sessionWeak.indexOf(w.id) < 0) sessionWeak.push(w.id);
+    var ki = known.indexOf(w.id);
+    if (ki >= 0) known.splice(ki, 1);
+  }
+  save();
+  flipped = false;
+  if (index + 1 >= words.length) finished = true; else index++;
+  render();
+}
+function checkIn() {
+  var today = dateStr(new Date());
+  var day = activeDay !== null ? activeDay : currentDay();
+  if (checkins.indexOf(today) < 0) checkins.push(today);
+  if (completedDays.indexOf(day) < 0) completedDays.push(day);
+  save();
+  reportProgress(day);
+  render();
+}
+function reportProgress(doneDay) {
+  var text = 'VOCAB_CHECKIN 打卡同步 | day=' + doneDay + ' | known=' + known.length +
+    ' | streak=' + calcStreak(checkins) + ' | checkins=' + checkins.length;
+  var body = JSON.stringify({ msg_type: 'text', content: { text: text } });
+  try {
+    var ok = navigator.sendBeacon(WEBHOOK_URL, new Blob([body], { type: 'application/json' }));
+    if (!ok) fetch(WEBHOOK_URL, { method: 'POST', mode: 'no-cors', body: body });
+  } catch (e) { /* 上报失败不影响本地打卡 */ }
+}
+function setQuery(v) {
+  query = v;
+  var wrap = document.getElementById('wordListWrap');
+  if (wrap) wrap.innerHTML = libraryList();
+}
+function setCat(c) { catFilter = c; render(); }
+
+/* ── 渲染 ── */
+function renderHeader() {
+  document.getElementById('streakNum').textContent = calcStreak(checkins);
+  document.getElementById('knownNum').textContent = known.length;
+  document.getElementById('pbarFill').style.width = (completedDays.length / TOTAL_DAYS * 100) + '%';
+}
+function render() {
+  renderHeader();
+  var m = document.getElementById('main');
+  if (tab === 'learn') m.innerHTML = viewLearn();
+  else if (tab === 'plan') m.innerHTML = viewPlan();
+  else m.innerHTML = viewLibrary();
+}
+function viewLearn() {
+  var allDone = completedDays.length >= TOTAL_DAYS;
+  var day = activeDay !== null ? activeDay : currentDay();
+  var pd = PLAN[day - 1];
+  var words = wordsOfDay(day);
+
+  if (allDone && activeDay === null) {
+    return '<div class="card center"><p class="big-emoji">🏆</p>' +
+      '<h2 class="done-t">14 天计划全部完成！</h2>' +
+      '<p class="dim">你已掌握 ' + known.length + ' / ' + TOTAL_WORDS + ' 个核心词汇，累计打卡 ' + checkins.length + ' 天。<br>可以去「学习计划」复习任何一天，或在「全部词库」里查漏补缺。</p>' +
+      '<button class="btn-primary" onclick="setTab(\'plan\')">去复习 →</button></div>';
+  }
+
+  if (!finished) {
+    var w = words[index];
+    if (!w) return '';
+    return '<div class="learn-hd"><div>' +
+      '<p class="day-k">Day ' + day + ' · ' + esc(pd.title) + '</p>' +
+      '<h2 class="day-f">' + esc(pd.focus) + '</h2></div>' +
+      '<span class="pill-cnt">' + (index + 1) + ' / ' + words.length + ' · 约 ' + pd.minutes + ' 分钟</span></div>' +
+
+      '<div class="flash' + (flipped ? ' flip' : '') + '" id="flashcard" onclick="flipCard()" role="button" aria-label="点击翻面">' +
+      '<div class="flash-inner">' +
+      '<div class="face front"><span class="cat-pill">' + esc(w.category) + '</span>' +
+      '<h2 class="term">' + esc(w.term) + '</h2>' +
+      (w.full ? '<p class="full">' + esc(w.full) + '</p>' : '') +
+      '<p class="flip-hint">点击卡片查看释义与例句 →</p></div>' +
+      '<div class="face back"><p class="cn">' + esc(w.cn) + '</p>' +
+      '<div class="ex-box"><p class="ex">' + esc(w.example) + '</p>' +
+      '<p class="ex-cn">' + esc(w.exampleCn) + '</p></div>' +
+      '<p class="flip-hint">再点一次翻回 →</p></div>' +
+      '</div></div>' +
+
+      '<div class="mark-row">' +
+      '<button class="btn-weak" onclick="event.stopPropagation();mark(\'weak\')">🤔 还不熟</button>' +
+      '<button class="btn-known" onclick="event.stopPropagation();mark(\'known\')">✅ 认识了</button></div>' +
+      '<p class="tip">点击卡片翻面查看释义和例句，然后诚实标记～</p>';
+  }
+
+  var todayChecked = checkins.indexOf(dateStr(new Date())) >= 0;
+  var streak = calcStreak(checkins);
+  var html = '<div class="card center"><p class="big-emoji">🎉</p>' +
+    '<h2 class="done-t">Day ' + day + ' 学习完成！</h2>' +
+    '<div class="stat-row">' +
+    '<div><p class="v violet">' + sessionKnown.length + '</p><p class="k">✅ 认识了</p></div>' +
+    '<div><p class="v amber">' + sessionWeak.length + '</p><p class="k">🤔 需巩固</p></div></div>';
+  if (todayChecked) {
+    html += '<p class="checked">🔥 今日已打卡 · 连续 ' + streak + ' 天</p>';
+  } else {
+    html += '<button class="btn-checkin" onclick="checkIn()">🔥 完成今日打卡</button>';
+  }
+  html += '<br><button class="again" onclick="startSession(' + day + ')">再学一遍本日内容</button></div>';
+  return html;
+}
+function viewPlan() {
+  var cd = currentDay();
+  var html = '<div class="note">📌 计划说明：共 <b>' + TOTAL_DAYS + ' 天</b>，每天约 <b>10 分钟</b>，按「基础概念 → 模型架构 → 训练 → 推理部署 → Agent 范式 → 工具 → 商业术语」循序渐进。学完当日词卡后点击打卡，保持 streak！</div><div class="day-grid">';
+  for (var i = 0; i < PLAN.length; i++) {
+    var p = PLAN[i];
+    var done = completedDays.indexOf(p.day) >= 0;
+    var active = p.day === cd && !done;
+    var count = wordsOfDay(p.day).length;
+    html += '<button class="day-card' + (done ? ' done' : active ? ' active' : '') + '" onclick="startSession(' + p.day + ')">' +
+      '<span class="badge">' + (done ? '✓' : p.day) + '</span>' +
+      '<div style="min-width:0"><p class="tt">' + esc(p.title) + ' · ' + esc(p.focus) + '</p>' +
+      '<p class="mm">' + count + ' 词 · ~' + p.minutes + ' 分钟' +
+      (done ? '<span class="tag-done">已完成</span>' : '') +
+      (active ? '<span class="tag-now">今天学这个 →</span>' : '') +
+      '</p></div></button>';
+  }
+  return html + '</div>';
+}
+function viewLibrary() {
+  var cats = ['全部'];
+  for (var i = 0; i < VOCAB.length; i++) if (cats.indexOf(VOCAB[i].category) < 0) cats.push(VOCAB[i].category);
+  var html = '<input class="search" placeholder="搜索英文 / 中文关键词…" value="' + esc(query) + '" oninput="setQuery(this.value)">' +
+    '<div class="cats">';
+  for (var j = 0; j < cats.length; j++) {
+    html += '<button class="' + (catFilter === cats[j] ? 'on' : '') + '" onclick="setCat(\'' + cats[j] + '\')">' + esc(cats[j]) + '</button>';
+  }
+  html += '</div><div id="wordListWrap">' + libraryList() + '</div>';
+  return html;
+}
+function libraryList() {
+  var q = query.trim().toLowerCase();
+  var filtered = VOCAB.filter(function (w) {
+    var okCat = catFilter === '全部' || w.category === catFilter;
+    var okQ = !q || w.term.toLowerCase().indexOf(q) >= 0 ||
+      (w.full || '').toLowerCase().indexOf(q) >= 0 || w.cn.toLowerCase().indexOf(q) >= 0;
+    return okCat && okQ;
+  });
+  var html = '<p class="lib-cnt">共 ' + filtered.length + ' 个词条</p><div class="word-list">';
+  for (var i = 0; i < filtered.length; i++) {
+    var w = filtered[i];
+    var isKnown = known.indexOf(w.id) >= 0;
+    html += '<div class="wcard"><div class="top"><div>' +
+      '<p class="t">' + esc(w.term) + (w.full ? '<span class="f">' + esc(w.full) + '</span>' : '') + '</p>' +
+      '<p class="c">' + esc(w.cn) + '</p></div>' +
+      '<div class="tags">' + (isKnown ? '<span class="tag known">已掌握</span>' : '') +
+      '<span class="tag day">Day ' + w.day + '</span></div></div>' +
+      '<div class="exb"><p class="e1">' + esc(w.example) + '</p><p class="e2">' + esc(w.exampleCn) + '</p></div></div>';
+  }
+  return html + '</div>';
+}
+function renderLibrary() { render(); }
+
+render();
+</script>
+</body>
+</html>
